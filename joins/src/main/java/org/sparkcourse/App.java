@@ -12,7 +12,7 @@ public class App
     private static void firstExercise(JavaSparkContext sc) {
         Logger.info("FIRST EXERCISE START");
 
-        JavaRDD<String> chapterCourseMapping = sc.textFile("src/main/resources/chapters.csv");
+        JavaRDD<String> chapterCourseMapping = sc.textFile("joins/src/main/resources/chapters.csv");
         JavaPairRDD<String, Long> javaPairRDD = chapterCourseMapping.mapToPair(
                 row -> new Tuple2<>( row.split(",")[1], 1L)
         ).sortByKey();
@@ -30,10 +30,10 @@ public class App
     private static void secondExercise(JavaSparkContext sc) {
         Logger.info("SECOND EXERCISE START");
 
-        JavaRDD<String> viewsRDD = sc.textFile("src/main/resources/views-*.csv");
+        JavaRDD<String> viewsRDD = sc.textFile("joins/src/main/resources/views-*.csv");
 
         // chapterId, courseId
-        JavaPairRDD<Long, Long> chaptersRDD = sc.textFile("src/main/resources/chapters.csv")
+        JavaPairRDD<Long, Long> chaptersRDD = sc.textFile("joins/src/main/resources/chapters.csv")
                 .mapToPair(row -> new Tuple2<>(Long.valueOf(row.split(",")[0]), Long.valueOf(row.split(",")[1])));
 
         // chapterId, userId, courseId
